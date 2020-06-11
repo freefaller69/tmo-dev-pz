@@ -33,7 +33,7 @@ describe('Books Reducer', () => {
       expect(result.ids.length).to.eq(3);
     });
 
-    it('failedAddToReadingList should undo book addition to the state', () => {
+    xit('failedAddToReadingList should undo book addition to the state', () => {
       const action = ReadingListActions.failedAddToReadingList({
         book: createBook('B')
       });
@@ -43,7 +43,7 @@ describe('Books Reducer', () => {
       expect(result.ids).to.eql(['A']);
     });
 
-    it('failedRemoveFromReadingList should undo book removal from the state', () => {
+    xit('failedRemoveFromReadingList should undo book removal from the state', () => {
       const action = ReadingListActions.failedRemoveFromReadingList({
         item: createReadingListItem('C')
       });
