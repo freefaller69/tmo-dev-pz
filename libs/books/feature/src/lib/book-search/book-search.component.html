@@ -11,7 +11,9 @@
 <ng-container *ngIf="searchTerm; else empty">
   <div class="book-grid">
     <div class="book" data-testing="book-item" *ngFor="let b of books">
-
+      <div class="book--title">
+        {{ b.title }}
+      </div>
       <div class="book--content">
         <div class="book--content--cover">
           <img src="{{ b.coverUrl }}" alt="{{ b.title }}" />

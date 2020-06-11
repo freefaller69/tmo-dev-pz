@@ -9,6 +9,7 @@ import {
 } from '@tmo/books/data-access';
 import { FormBuilder } from '@angular/forms';
 import { Book } from '@tmo/shared/models';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'tmo-book-search',
@@ -21,6 +22,14 @@ export class BookSearchComponent implements OnInit {
   searchForm = this.fb.group({
     term: ''
   });
+
+  searchForm$ = this.searchForm.valueChanges
+    .pipe(debounceTime(500))
+    .subscribe(searchTerm => {
+      if (searchTerm.term.trim().length) {
+        this.store.dispatch(searchBooks(searchTerm));
+      }
+    });
 
   constructor(
     private readonly store: Store,
