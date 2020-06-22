@@ -33,7 +33,12 @@
   margin-right: $spacing-xxs;
 }
 
+.reading-list-item--details--finished {
+  color: $pink-accent;
+}
+
 .reading-list-item--details--title,
+.reading-list-item--details--finished,
 .reading-list-item--details--author {
   text-overflow: ellipsis;
   overflow: hidden;

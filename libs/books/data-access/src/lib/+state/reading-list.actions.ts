@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { Book, ReadingListItem } from '@tmo/shared/models';
+import { Update } from '@ngrx/entity';
 
 export const loadReadingList = createAction('[Reading List] Load list');
 
@@ -15,6 +16,21 @@ export const loadReadingListError = createAction(
 export const addToReadingList = createAction(
   '[Reading List] Add to list',
   props<{ book: Book }>()
+);
+
+export const markBookAsCompleted = createAction(
+  '[Reading List] Mark book as completed',
+  props<{ update: Update<ReadingListItem> }>()
+);
+
+export const confirmedMarkBookAsCompleted = createAction(
+  '[Reading List] Confirmed book marked as completed',
+  props<{ update: Update<ReadingListItem> }>()
+);
+
+export const failedMarkBookAsCompleted = createAction(
+  '[Reading List] Failed book marked as completed',
+  props<{ update: Update<ReadingListItem> }>()
 );
 
 export const failedAddToReadingList = createAction(
