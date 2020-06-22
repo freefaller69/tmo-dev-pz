@@ -4,7 +4,7 @@ import { fetch, optimisticUpdate } from '@nrwl/angular';
 import * as ReadingListActions from './reading-list.actions';
 import { HttpClient } from '@angular/common/http';
 import { ReadingListItem } from '@tmo/shared/models';
-import { map } from 'rxjs/operators';
+import { map, concatMap, tap } from 'rxjs/operators';
 
 @Injectable()
 export class ReadingListEffects implements OnInitEffects {
@@ -49,6 +49,29 @@ export class ReadingListEffects implements OnInitEffects {
         }
       })
     )
+  );
+
+  updateBook$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ReadingListActions.markBookAsCompleted),
+      optimisticUpdate({
+        run: ({ update }) => {
+          return this.http.put<ReadingListItem>(`/api/reading-list/${update.id}/finished`, update.changes).pipe(
+            map(() =>
+              ReadingListActions.confirmedMarkBookAsCompleted({
+                update
+              })
+            )
+          );
+        },
+        undoAction: ({ update }) => {
+          return ReadingListActions.failedMarkBookAsCompleted({
+            update
+          });
+        }
+      })
+    ),
+    { dispatch: false }
   );
 
   removeBook$ = createEffect(() =>
